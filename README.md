@@ -34,11 +34,17 @@ Options:
 > - Expires is reccomended
 > - Other options are for security and request handling, so not required.
 
+Cookies Documentation:
+> `Cookies` is another way of calling the same methods used with `Cookie`
+> - The equivalent of `Cookie(key, value, option)` is `Cookies.set(key, value, option)`
+> - The equivalent of `Cookie(key)` is `Cookies.get(key)`
+> - The equivalent of `Cookie().remove(key)` is `Cookies.remove(key)`
+
 
 # Examples
 
 ```js
-//Cookies function:
+//Cookie function:
 
 /* No arguments: returns document
  * Supply only key: fetches cookie at given key
@@ -62,7 +68,22 @@ Cookie('myCookie'); // Given previous example, returns {data: "Hello World"}
  * Key: Must be supplied in the remove function
  */
 Cookie().remove('myCookie');
-//Cookies.remove(key) is also a function!
+
+// Cookies usage:
+
+/* Setting cookies using Cookies.set()
+ * Works the same as Cookie(key, value, options)
+ */
+Cookies.set('myCookie', {data: "Hi Earth!"}, {expires: 5})
+
+/* Fetching cookies using Cookies.get()
+ * Works the same as Cookie(key)
+ */
+Cookies.get('myCookie')
+
+/* Removing Cookies using Cookies.remove()
+ * Works the same as Cookie.remove('myCookie')
+ */
 Cookies.remove('myCookie');
 
 
@@ -70,6 +91,4 @@ Cookies.remove('myCookie');
 if(!!Cookie('myCookie')) {
     console.log(Cookie('myCookie'));
 }
-
-
 ```
