@@ -12,6 +12,40 @@ var Cookie = function(key, value, options) {
         this.Cookie(key, {}, $.extend({}, options, { expires: -1 }));
 		return !this.Cookie(key);
     }
+    this.set = (key, value, options) => {
+        this.options = $.extend({}, config.defaults, options);
+            
+			if (typeof this.options.expires === 'number') {
+				var days = this.options.expires, t = this.options.expires = new Date();
+				t.setTime(+t + days * 864e+5);
+            }
+
+			return (document.cookie = [
+				this.encode(key), '=', this.stringifyCookieValue(value),
+				this.options.expires ? '; expires=' + this.options.expires.toUTCString() : '',
+				this.options.path    ? '; path='    + this.options.path : '',
+				this.options.domain  ? '; domain='  + this.options.domain : '',
+				this.options.secure  ? '; secure' : ''
+            ].join(''));
+    }
+    this.get = (key, value, options) => {
+        var cookies = document.cookie ? document.cookie.split('; ') : [];
+            
+            for(var i = 0; i < cookies.length; i++) {
+                var parts = cookies[i].split('=');
+                var name = this.decode(parts.shift());
+                var cookie = parts.join('=');
+                
+                if (config.key && config.key === name) {
+                    this.result = this.read(cookie, value);
+                    break;
+                }
+    
+                if (!key && (cookie = read(cookie)) !== undefined) {
+                    this.result[name] = cookie;
+                }
+            }
+    }
     this.cookie = (config) => {
         if(config.key === undefined) {
             this.result = this;
