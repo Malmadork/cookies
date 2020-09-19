@@ -62,6 +62,8 @@ Cookie('myCookie'); // Given previous example, returns {data: "Hello World"}
  * Key: Must be supplied in the remove function
  */
 Cookie().remove('myCookie');
+//Cookies.remove(key) is also a function!
+Cookies.remove('myCookie');
 
 
 //It is good practice to check if the cookie exists before fetching it, i.e.
