@@ -4,6 +4,10 @@ Cookies.js is used to work around a unique jquery.cookies error that occurs. Som
 
 You can get a CDN for this repo at:
 https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.js
+Try using:
+```html
+<script src="https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.js"></script>
+```
 
 # Documentation
 
