@@ -79,4 +79,4 @@ var Cookie = function(key, value, options) {
 	}
     this.cookie(this.config);
     return this.result;
-} 
+}
