@@ -1,7 +1,3 @@
-# About
-
-Cookies.js is used to handle cookies when using a server with jquery. Can be used in place of jquery.cookie.
-
 # Cookies.js Overview
 
 Cookies.js is used to work around a unique jquery.cookies error that occurs. Some, including myself, encountered errors when using `$.cookie`. I decided to take it upon myself to create an easy to use cookie method for anyone.
