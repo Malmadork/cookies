@@ -2,6 +2,9 @@
 
 Cookies.js is used to work around a unique jquery.cookies error that occurs. Some, including myself, encountered errors when using `$.cookie`. I decided to take it upon myself to create an easy to use cookie method for anyone.
 
+You can get a CDN for this repo at:
+https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.js
+
 # Documentation
 
 Cookies.js does still require jquery, as it needs to use `$.extend`.
