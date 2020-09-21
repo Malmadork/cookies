@@ -2,9 +2,9 @@
 
 Cookies.js is used to work around a unique jquery.cookies error that occurs. Some, including myself, encountered errors when using `$.cookie`. I decided to take it upon myself to create an easy to use cookie method for anyone.
 
-You can get a CDN for this repo at:
-https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.js
-Try using:
+You can get a CDN for this repo at:  
+https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.js  
+Try using:  
 ```html
 <script src="https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.js"></script>
 ```
@@ -13,15 +13,15 @@ Try using:
 
 Cookies.js does still require jquery, as it needs to use `$.extend`.
 You can find more information on jquery here: https://jquery.com/
-Below is a CDN link for minified jquery:
+Below is a CDN link for minified jquery:  
 https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js
 
-Cookie is a function that accepts up to three arguments, and has a remove function.
-The 3 arguments are `key, value, options`. 
+Cookie is a function that accepts up to three arguments, and has a remove function.  
+The 3 arguments are `key, value, options`.  
 Keys:
 > Keys must be a string, and is used to fetch or set cookies.
 
-Value: 
+Value:
 > Value must be an object, and is used when setting cookies.
 
 Options:
@@ -133,3 +133,11 @@ Cookies.storage.clear();
 Cookies.storage.all(); //Returns all localstorage data
 Cookies.storage.all('mySto') //Returns all storage objects that match "my"
 ```
+
+# Other
+
+I'm fairly new to creating open-source code, so I'm sure there might be some issues. If you experience problems, and it might have something to do with my code, try these steps:  
+1) Try moving where the script is located in your html file  
+2) Make sure you have jquery and are running this on a server (for cookies)  
+3) Double check documentation  
+4) **If all else fails** or you have suggestions, reach out to me @ gamesandmoreneocities@gmail.com 
