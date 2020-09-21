@@ -92,3 +92,7 @@ if(!!Cookie('myCookie')) {
     console.log(Cookie('myCookie'));
 }
 ```
+
+# Updates?
+
+Sometime soon, I am planning on adding a way to handle localstorage data, and fix some of the issues and restrictions on data types. Stay tuned!
