@@ -3,6 +3,76 @@ var Cookie = function(key, value, options) {
     this.pluses = /\+/g;
     this.result = key ? undefined : {};
 
+    this.storage = {
+        set: function(key, data) {
+            let value = (typeof data === 'object') ? JSON.stringify(data) : (typeof data === 'string') ? data : null;
+            if(value == null) return console.log("Data type of KEY [Cookies.storage.set(KEY)] invalid!")
+            localStorage.setItem(key, value);
+            return true;
+        },
+        get: function(key) {
+            let value = false;
+            let found = localStorage.getItem(key) ? true : false;
+            if(found) {
+                try {
+                    value = JSON.parse(localStorage.getItem(key))
+                } catch (error) {
+                    value = localStorage.getItem(key)
+                }
+            }
+            return value;
+        },
+        remove: function(key) {
+            let found = localStorage.getItem(key) ? true : false;
+            if(found !== false) {
+                localStorage.removeItem(key)
+                return found;
+            }
+            else return found;
+            
+        },
+        clear: function() {
+            localStorage.clear();
+            return true;
+        },
+        all: function(matches) {
+            let list = {};
+            if(matches === undefined) {
+                if(localStorage.length > 0) {
+                    Object.keys(localStorage).forEach(item => {
+                        try {
+                            list[item] = JSON.parse(localStorage[item])
+                        } catch (error) {
+                            list[item] = localStorage[item]
+                        }
+                        
+                    })
+                    return list;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                if(localStorage.length > 0) {
+                    Object.keys(localStorage).forEach(item => {
+                        if(item.includes(matches)) {
+                            try {
+                                list[item] = JSON.parse(localStorage[item])
+                            } catch (error) {
+                                list[item] = localStorage[item]
+                            }
+                        }
+                    })
+                    return list;
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+    }
+
     this.remove = function(key) {
 
         if(this.Cookie(key) === undefined) return {
@@ -10,7 +80,7 @@ var Cookie = function(key, value, options) {
             message: "Cookie not found"
         }
         this.Cookie(key, {}, $.extend({}, options, { expires: -1 }));
-		return !this.Cookie(key);
+		return {status: !this.Cookie(key), message: 'Cookie has been removed'};
     }
     this.set = (key, value, options) => {
         this.options = $.extend({}, config.defaults, options);
@@ -28,24 +98,27 @@ var Cookie = function(key, value, options) {
 				this.options.secure  ? '; secure' : ''
             ].join(''));
     }
-    this.get = (key, value, options) => {
+    this.get = (key) => {
+        var result = key ? undefined : {};
         var cookies = document.cookie ? document.cookie.split('; ') : [];
-            
+           
             for(var i = 0; i < cookies.length; i++) {
                 var parts = cookies[i].split('=');
                 var name = this.decode(parts.shift());
                 var cookie = parts.join('=');
                 
                 if (config.key && config.key === name) {
-                    this.result = this.read(cookie, value);
+                    result = this.read(cookie, undefined);
                     break;
                 }
     
                 if (!key && (cookie = read(cookie)) !== undefined) {
-                    this.result[name] = cookie;
+                    result[name] = cookie;
                 }
             }
+            return result;
     }
+    
     this.cookie = (config) => {
         if(config.key === undefined) {
             this.result = this;
@@ -95,6 +168,9 @@ var Cookie = function(key, value, options) {
     this.read = (s, converter) => {
         var value = parseCookieValue(s);
 		return $.isFunction(converter) ? converter(value) : value;
+    }
+    this.readValue = (s) => {
+        return parseCookieValue(s);
     }
     this.parseCookieValue = (s) => {
         if (s.indexOf('"') === 0) {

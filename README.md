@@ -40,8 +40,18 @@ Cookies Documentation:
 > - The equivalent of `Cookie(key)` is `Cookies.get(key)`
 > - The equivalent of `Cookie().remove(key)` is `Cookies.remove(key)`
 
+Cookies.js can also handle localStorage data!
+> `Cookies.storage` or `Cookie().storage` can be used here.
+> - `Cookies.storage.set()`: Sets localStorage data at given key.
+> - `get(key)`: Returns localStorage data given key.
+> - `remove(key)`: Removes data at given key.
+> - `clear()`: Resets localStorage.
+> - `all()` / `all(matches)`: Returns all localStorage (with matching)
 
-# Examples
+`Cookies.storage.all()` returns all localStorage, whereas `Cookies.storage.all(matches)` returns all localStorage matching that value.
+
+
+# Cookie Examples
 
 ```js
 //Cookie function:
@@ -93,6 +103,33 @@ if(!!Cookie('myCookie')) {
 }
 ```
 
-# Updates?
+# localStorage Examples
 
-Sometime soon, I am planning on adding a way to handle localstorage data, and fix some of the issues and restrictions on data types. Stay tuned!
+```js
+/* Example: Setting localStorage
+ * Key: Must be of type string
+ * Value: Can be object or string.
+ */
+Cookies.storage.set('myStorage', {data:"Hola mundo!"});
+
+/* Example: Fetching localStorage
+ * Key: Must be of type string
+ */
+Cookies.storage.get('myStorage'); // Given previous example, should return {data:"Hola mundo!"}
+
+/* Example: Removing localStorage
+ * Key: Must be of type string
+ */
+Cookies.storage.remove('myStorage');
+
+/* Example: Clearing localStorage
+ * Note: Completely clears all data...
+ */
+Cookies.storage.clear();
+
+/* Example: Getting all localStorage
+ * [OPTIONAL] - Matches: Must be a string, case-sensitive
+ */
+Cookies.storage.all(); //Returns all localstorage data
+Cookies.storage.all('mySto') //Returns all storage objects that match "my"
+```
