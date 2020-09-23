@@ -79,11 +79,12 @@ var Cookie = function(key, value, options) {
             status: false,
             message: "Cookie not found"
         }
-        this.Cookie(key, {}, $.extend({}, options, { expires: -1 }));
+        let optionobj = Object.assign({expires: -1}, options || {})
+        this.Cookie(key, {}, optionobj);
 		return {status: !this.Cookie(key), message: 'Cookie has been removed'};
     }
     this.set = (key, value, options) => {
-        this.options = $.extend({}, config.defaults, options);
+        this.options = Object.assign(options, {})
             
 			if (typeof this.options.expires === 'number') {
 				var days = this.options.expires, t = this.options.expires = new Date();
@@ -124,7 +125,7 @@ var Cookie = function(key, value, options) {
             this.result = this;
         }
         else if(config.value !== undefined) {
-            this.options = $.extend({}, config.defaults, options);
+            this.options = Object.assign(config.options, {})
             
 			if (typeof this.options.expires === 'number') {
 				var days = this.options.expires, t = this.options.expires = new Date();
@@ -167,7 +168,7 @@ var Cookie = function(key, value, options) {
     }
     this.read = (s, converter) => {
         var value = parseCookieValue(s);
-		return $.isFunction(converter) ? converter(value) : value;
+		return this.isFunction(converter) ? converter(value) : value;
     }
     this.readValue = (s) => {
         return parseCookieValue(s);
@@ -186,7 +187,10 @@ var Cookie = function(key, value, options) {
     }
     this.stringifyCookieValue = (value) => {
 		return this.encode(JSON.stringify(value));
-	}
+    }
+    this.isFunction = (functionToCheck) => {
+        return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    }
     this.cookie(this.config);
     return this.result;
 }

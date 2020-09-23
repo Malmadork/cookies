@@ -11,10 +11,7 @@ Try using:
 
 # Documentation
 
-Cookies.js does still require jquery, as it needs to use `$.extend`.
-You can find more information on jquery here: https://jquery.com/
-Below is a CDN link for minified jquery:  
-https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js
+Cookies.js no longer requires jquery! 
 
 Cookie is a function that accepts up to three arguments, and has a remove function.  
 The 3 arguments are `key, value, options`.  
