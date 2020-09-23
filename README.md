@@ -9,6 +9,13 @@ Try using:
 <script src="https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.js"></script>
 ```
 
+You can also get a minified version at:
+https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.min.js
+Try using:  
+```html
+<script src="https://cdn.jsdelivr.net/gh/Malmadork/cookies@master/src/Cookies.min.js"></script>
+```
+
 # Documentation
 
 Cookies.js no longer requires jquery! 

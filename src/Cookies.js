@@ -1,3 +1,15 @@
+/**
+ * Malmadork/cookies v1.3.0
+ * https://github.com/Malmadork/cookies
+ *
+ * Copyright 2020 Malmadork
+ * This script is available open-source. Please include this header in each use of this script, modified or unmodified.
+ * 
+ * Documentation on github
+ * Cookie(key, value, options)
+ * Cookies.set | Cookies.get | Cookies.remove
+ * Cookies.storage
+ */
 var Cookie = function(key, value, options) {
     this.config = {key, value, options}
     this.pluses = /\+/g;
