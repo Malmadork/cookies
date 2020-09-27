@@ -135,7 +135,7 @@ Cookies.storage.clear();
  * [OPTIONAL] - Matches: Must be a string, case-sensitive
  */
 Cookies.storage.all(); //Returns all localstorage data
-Cookies.storage.all('mySto') //Returns all storage objects that match "my"
+Cookies.storage.all('mySto') //Returns all storage objects that match "mySto"
 ```
 
 # Other
