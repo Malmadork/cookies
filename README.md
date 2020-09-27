@@ -144,4 +144,6 @@ I'm fairly new to creating open-source code, so I'm sure there might be some iss
 1) Try moving where the script is located in your html file  
 2) Make sure you have jquery and are running this on a server (for cookies)  
 3) Double check documentation  
-4) **If all else fails** or you have suggestions, reach out to me @ gamesandmoreneocities@gmail.com 
+4) **If all else fails** or you have suggestions, reach out to me @ gamesandmoreneocities@gmail.com. Please provide one of the Issue Templates.
+
+You may also request for new features at the listed email, and please include one of the provided Issue Templates.
