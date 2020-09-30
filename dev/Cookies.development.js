@@ -84,15 +84,22 @@ var Cookie = function(key, value, options) {
 		return {status: !this.Cookie(key), message: 'Cookie has been removed'};
     }
     this.set = (key, value, options) => {
-        this.options = Object.assign(options, {})
+            this.options = (typeof options === "object") ? Object.assign(options, {}) : {};
             
-			if (typeof this.options.expires === 'number') {
+            
+			if (this.options.expires && typeof this.options.expires === 'number') {
 				var days = this.options.expires, t = this.options.expires = new Date();
 				t.setTime(+t + days * 864e+5);
             }
 
+            var _value = (typeof value === 'object') ? this.stringifyCookieValue(value) : ((typeof value === 'string') ? value : undefined);
+
+            if(_value === undefined) {
+                return "Cookie must be set as an object or string."
+            }
+            
 			return (document.cookie = [
-				this.encode(key), '=', this.stringifyCookieValue(value),
+				this.encode(key), '=', _value,
 				this.options.expires ? '; expires=' + this.options.expires.toUTCString() : '',
 				this.options.path    ? '; path='    + this.options.path : '',
 				this.options.domain  ? '; domain='  + this.options.domain : '',
@@ -108,7 +115,7 @@ var Cookie = function(key, value, options) {
                 var name = this.decode(parts.shift());
                 var cookie = parts.join('=');
                 
-                if (config.key && config.key === name) {
+                if (key && key === name) {
                     result = this.read(cookie, undefined);
                     break;
                 }
@@ -117,6 +124,7 @@ var Cookie = function(key, value, options) {
                     result[name] = cookie;
                 }
             }
+            
             return result;
     }
     

@@ -20,13 +20,13 @@ Try using:
 
 Cookies.js no longer requires jquery! 
 
-Cookie is a function that accepts up to three arguments, and has a remove function.  
+Cookie is a function that accepts up to three arguments.
 The 3 arguments are `key, value, options`.  
 Keys:
-> Keys must be a string, and is used to fetch or set cookies.
+> Keys must be a string for setting and getting objects by name. If a key is a number, it will fetch a cookie at that index.
 
 Value:
-> Value must be an object, and is used when setting cookies.
+> Value can be an object or string, and is used when setting cookies.
 
 Options:
 > Options must be an object, and has several settings:
@@ -42,7 +42,6 @@ Cookies Documentation:
 > `Cookies` is another way of calling the same methods used with `Cookie`
 > - The equivalent of `Cookie(key, value, option)` is `Cookies.set(key, value, option)`
 > - The equivalent of `Cookie(key)` is `Cookies.get(key)`
-> - The equivalent of `Cookie().remove(key)` is `Cookies.remove(key)`
 
 Cookies.js can also handle localStorage data!
 > `Cookies.storage` or `Cookie().storage` can be used here.
@@ -60,7 +59,7 @@ Cookies.js can also handle localStorage data!
 ```js
 //Cookie function:
 
-/* No arguments: returns document
+/* No arguments: 
  * Supply only key: fetches cookie at given key
  * All arguments: sets cookie at given key
  */
@@ -68,20 +67,25 @@ Cookie(key, value, options);
 
 /* Example: Setting a cookie that expires in one day
  * Key: Must be of type string
- * Value: Must be of type object
+ * Value: Can be string or object
  * Options: Must be of type object
  */
 Cookie('myCookie', {data: "Hello World!"}, {expires: 1});
 
 /* Example: Fetching a cookie with key "myCookie"
- * Key: Must be of type string
+ * Key: Must be of type string (or number, but returns differently)
  */
 Cookie('myCookie'); // Given previous example, returns {data: "Hello World"}
 
-/* Example: Removing a cookie given key "myCookie"
- * Key: Must be supplied in the remove function
+/* Example: Fetching all Cookies
+ * No arguments supplied
  */
-Cookie().remove('myCookie');
+Cookie();
+
+/* Example: Fetching a cookie at an index
+ * Key: Type of number
+ */
+Cookie(0);
 
 // Cookies usage:
 
@@ -96,9 +100,20 @@ Cookies.set('myCookie', {data: "Hi Earth!"}, {expires: 5})
 Cookies.get('myCookie')
 
 /* Removing Cookies using Cookies.remove()
- * Works the same as Cookie.remove('myCookie')
+ * Key: Must be of type string
  */
 Cookies.remove('myCookie');
+
+/* Fetching all Cookies using Cookies.get()
+ * No arguments supplied
+ */
+Cookies.get();
+
+/* Fetching a cookie at an index using Cookies.get()
+ * Key: Type of number
+ */
+Cookies.get(0);
+
 
 
 //It is good practice to check if the cookie exists before fetching it, i.e.
@@ -137,6 +152,15 @@ Cookies.storage.clear();
 Cookies.storage.all(); //Returns all localstorage data
 Cookies.storage.all('mySto') //Returns all storage objects that match "mySto"
 ```
+
+# Recent Changes
+- `Cookie().remove(key)` is no longer a function
+- `Cookie()` no longer returns document, returns parsed document.cookie
+- `Cookies.get()` no longer returns error, returns parsed document.cookie
+- Added `Cookie(index)` and `Cookies.get(index)` to fetch a cookie at an index
+- Changed returns to `return false` rather than `return {status: false, message:"[Error Message]"}`. 
+- Added Support for setting strings.
+- `Cookies.set` still returns the document.cookie object set.
 
 # Other
 
