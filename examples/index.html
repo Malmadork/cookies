@@ -3,7 +3,7 @@
     <head>
         <title>Testing Cookies!</title>
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-        <script src='/src/Cookies.min.js' type='text/javascript'></script>
+        <script src='../src/Cookies.js' type='text/javascript'></script>
          <!--<script src='/dev/Cookies.development.js' type='text/javascript'></script> -->
 
     </head>
@@ -11,12 +11,18 @@
         <h2>Testing Cookies Here</h2>
         <script>
             //Needs to be run on a server :)
-            if(!Cookie('myCookie')) {
-                Cookie('myCookie', {data:"Hello World!"}, {expires: 1})
+
+            Cookies.set("testing-cookies-1", {data: 1234, data2: 3456, data10: {deepcut: [1, 2, 3, "String"]}})
+            Cookies.set("testing-cookies-2", {uuid: 12345})
+
+            if(Cookies.get("testing-cookies-1")) {
+                console.log(Cookies.get("testing-cookies-1"));
             }
-            else {
-                console.log(Cookie('myCookie'))
+            if(Cookies.get("testing-cookies-2")) {
+                console.log(Cookies.get("testing-cookies-2"));
             }
+
+            
 
         </script>
     </body>
