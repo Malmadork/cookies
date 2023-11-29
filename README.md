@@ -20,28 +20,25 @@ Try using:
 
 Cookies.js no longer requires jquery! 
 
-Cookie is a function that accepts up to three arguments.
-The 3 arguments are `key, value, options`.  
+Cookies is a object with various methods: `Cookies.set(key, value, options)`, `Cookies.get(key)`, and `Cookies.remove(key)`.
+
+`Cookies.set()` accepts up to three arguments, `key, value, options`.  
 Keys:
-> Keys must be a string for setting and getting objects by name. If a key is a number, it will fetch a cookie at that index.
+> Keys must be a string for setting and getting objects by name. If a key is a number, it will fetch a cookie at that index. Key is required.
 
 Value:
-> Value can be an object or string, and is used when setting cookies.
+> Value can be an object or string, and is used when setting cookies. Value is required
 
 Options:
+> Options is optional.
 > Options must be an object, and has several settings:
-> - `expires`: Sets the expiration date for the cookie (in days).
+> - `expires`: Sets the expiration date for the cookie (number in milliseconds or string with identifiers). Examples for setting expiration date are below
 > - `path`: Sets the path for the cookie.
 > - `domain`: Sets the domain for the cookie
 > - `secure`: Cookie can only be transmitted over https.
 > No options are required however:
 > - Expires is reccomended
 > - Other options are for security and request handling, so not required.
-
-Cookies Documentation:
-> `Cookies` is another way of calling the same methods used with `Cookie`
-> - The equivalent of `Cookie(key, value, option)` is `Cookies.set(key, value, option)`
-> - The equivalent of `Cookie(key)` is `Cookies.get(key)`
 
 Cookies.js can also handle localStorage data!
 > `Cookies.storage` or `Cookie().storage` can be used here.
@@ -57,46 +54,25 @@ Cookies.js can also handle localStorage data!
 # Cookie Examples
 
 ```js
-//Cookie function:
-
-/* No arguments: 
- * Supply only key: fetches cookie at given key
- * All arguments: sets cookie at given key
- */
-Cookie(key, value, options);
-
-/* Example: Setting a cookie that expires in one day
- * Key: Must be of type string
- * Value: Can be string or object
- * Options: Must be of type object
- */
-Cookie('myCookie', {data: "Hello World!"}, {expires: 1});
-
-/* Example: Fetching a cookie with key "myCookie"
- * Key: Must be of type string (or number, but returns differently)
- */
-Cookie('myCookie'); // Given previous example, returns {data: "Hello World"}
-
-/* Example: Fetching all Cookies
- * No arguments supplied
- */
-Cookie();
-
-/* Example: Fetching a cookie at an index
- * Key: Type of number
- */
-Cookie(0);
-
 // Cookies usage:
 
 /* Setting cookies using Cookies.set()
- * Works the same as Cookie(key, value, options)
+ *
+ * The key is the name the cookie is stored under, must be a string.
+ * The value is the data stored under the key value with document.cookie
+ * The options allow for changing the path, domain, secure, and expires
+ *     features of a cookie. 
+ * 
+ * The expires option allows for numbers or strings. Numbers will be
+ * assumed as milliseconds, and strings will operate using a number followed 
+ * by an identifier. This will be explored below. 
  */
-Cookies.set('myCookie', {data: "Hi Earth!"}, {expires: 5})
+Cookies.set(key, value, options);
 
-/* Fetching cookies using Cookies.get()
- * Works the same as Cookie(key)
- */
+// Sets a cookie with an expiration date of 5 days. 
+Cookies.set('myCookie', {data: "Hello World!"}, {expires: "5d"})
+
+/* Fetching cookies using Cookies.get() */
 Cookies.get('myCookie')
 
 /* Removing Cookies using Cookies.remove()
@@ -120,6 +96,44 @@ Cookies.get(0);
 if(!!Cookie('myCookie')) {
     console.log(Cookie('myCookie'));
 }
+```
+
+## Expires option
+The `expires` option allows for a number, which will be assumed as milliseconds but you can also utilize a string (composed of a number followed by an identifier) to signify a length of time. 
+```
+- ms: millisecond
+- s:  second
+- m:  minute
+- h:  hour
+- d:  day
+- w:  week
+- M:  month
+```
+The following examples include an instance of each of these in use.
+```js
+// milliseconds via number (100000ms)
+Cookies.set("myCookieMS", {data: 1},  {expires: 100000})
+
+// milliseconds via string (100000ms)
+Cookies.set("myCookieMSS", {data: 1},  {expires: "100000ms"})
+
+// seconds via number (240 seconds)
+Cookies.set("myCookieSeconds", {data: 1},  {expires: "240s"})
+
+// minutes via number (30 minutes)
+Cookies.set("myCookieMinutes", {data: 1},  {expires: "30m"})
+
+// hours via number (12 hours)
+Cookies.set("myCookieHours", {data: 1},  {expires: "12h"})
+
+// days via number (7 days)
+Cookies.set("myCookieDays", {data: 1},  {expires: "7d"})
+
+// weeks via number (2 weeks)
+Cookies.set("myCookieWeeks", {data: 1},  {expires: "2w"})
+
+// months via number (1 month)
+Cookies.set("myCookieMonths", {data: 1},  {expires: "1M"})
 ```
 
 # localStorage Examples
@@ -154,20 +168,15 @@ Cookies.storage.all('mySto') //Returns all storage objects that match "mySto"
 ```
 
 # Recent Changes
-- `Cookie().remove(key)` is no longer a function
-- `Cookie()` no longer returns document, returns parsed document.cookie
-- `Cookies.get()` no longer returns error, returns parsed document.cookie
-- Added `Cookie(index)` and `Cookies.get(index)` to fetch a cookie at an index
-- Changed returns to `return false` rather than `return {status: false, message:"[Error Message]"}`. 
-- Added Support for setting strings.
-- `Cookies.set` still returns the document.cookie object set.
+- Removed the Cookie() methods in favor for the object 
+   > Use `Cookies.set()`, `Cookies.get()`, `Cookies.remove()`
+- `COOKIE_TOOLS` is a new object holding various helper methods for managing cookies and local storage. These may not be very useful for user use, but exist to aid Cookie storage.
+- `Cookies.set(key, value, options)` now allows the `expires` option to be stored in formats other than days. 
+   > When you set the expires option, a number value will be assumed as milliseconds instead of days, and one can also use a string in order to set the expiration time of the Cookie. This string will be composed of a number followed by characters that signify the length of time [ms, s, m, h, d, w, M]. For example: `{expires: "2d"}` will expire in two days, `{expires: "120m"}` will expire in 120 minutes,  `{expires: "1M"}` will expire in a month.
+- Various Bug Fixes
 
 # Other
 
-I'm fairly new to creating open-source code, so I'm sure there might be some issues. If you experience problems, and it might have something to do with my code, try these steps:  
-1) Try moving where the script is located in your html file  
-2) Make sure you have jquery and are running this on a server (for cookies)  
-3) Double check documentation  
-4) **If all else fails** or you have suggestions, reach out to me @ gamesandmoreneocities@gmail.com. Please provide one of the Issue Templates.
+If you run into issues or have ideas for improvements to code, please leave a note in the issues tab on Github. 
 
-You may also request for new features at the listed email, and please include one of the provided Issue Templates.
+Note: Setting cookies using Cookies.js may only work when on a server.
