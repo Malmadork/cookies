@@ -49,6 +49,62 @@ var COOKIE_TOOLS = {
     },
     isFunction: (functionToCheck) => {
         return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    },
+    isNumeric: (str) => {
+        if (typeof str != "string") return false;
+        return !isNaN(str) && !isNaN(parseFloat(str)) 
+    },
+    parseDateTme: (datetime) => {
+        if( typeof this.options.expires === 'number' ) {
+            return datetime;
+        }
+        else if( typeof this.options.expires === 'string' ) {
+            var arr = datetime.match(/[a-zA-Z]+|[0-9]+/g);
+            if(arr.length != 2) {
+                console.error("Incorrect format for 'expires' value. Provide a number followed by characters signifying the length of time [ms, s, m, h, d, w, M]. ", datetime);
+            }
+
+            if(COOKIE_TOOLS.isNumeric(arr[0])) {
+                if(!COOKIE_TOOLS.isNumeric(arr[1])) {
+
+                    var res = parseFloat(arr[0]);
+                    switch(arr[1]) {
+                        case 'ms':
+                            break;
+                        case 's':
+                            res = parseFloat(arr[0] * 1000);
+                            break;
+                        case 'm':
+                            res = parseFloat(arr[0] * 6e+4);
+                            break;
+                        case 'h':
+                            res = parseFloat(arr[0] * 3.6e+6);
+                            break;
+                        case 'd':
+                            res = parseFloat(arr[0] * 8.64e+7);
+                            break;
+                        case 'w':
+                            //604,800,000
+                            res = parseFloat(arr[0] * 6.048e+8)
+                            break;
+                        case 'M':
+                            //2,629,746,000
+                            res = parseFloat(arr[0] * 2.629746e+9)
+                            break;
+                        default: 
+                            break; 
+                    }
+                       
+                    return res;
+                }
+                else console.error("Format for expires value must be a number followed by characters signifying the length of time [ms, s, m, h, d, w, M]. Example '1000ms', '24h', '365d'. ", datetime);
+            }
+            else console.error("Format for expires value must be a number followed by characters signifying the length of time [ms, s, m, h, d, w, M]. Example '1000ms', '24h', '365d'. ", datetime);
+
+        }
+        else {
+            console.error("Incorrect format for 'expires' value. Provide a number in milliseconds or a string followed by [ms, s, m, h, d, w, M]", datetime);
+        }
     }
 }
 
@@ -133,9 +189,9 @@ var Cookies = {
         this.options = (typeof options === "object") ? Object.assign(options, {}) : {};
         
         
-        if (this.options.expires && typeof this.options.expires === 'number') {
-            var days = this.options.expires, t = this.options.expires = new Date();
-            t.setTime(+t + days * 864e+5);
+        if (this.options.expires) {
+            var time = COOKIE_TOOLS.parseDateTme(this.options.expires), t = this.options.expires = new Date();
+            t.setTime(+t + time);
         }
 
         var _key = (typeof key === 'string') ? true : false;

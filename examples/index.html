@@ -11,18 +11,20 @@
         <h2>Testing Cookies Here</h2>
         <script>
             //Needs to be run on a server :)
-
-            Cookies.set("testing-cookies-1", {data: 1234, data2: 3456, data10: {deepcut: [1, 2, 3, "String"]}})
-            Cookies.set("testing-cookies-2", {uuid: 12345})
+            
+            Cookies.set("testing-cookies-1", {data: 1234, data2: 3456, data10: {deepcut: [1, 2, 3, "String"]}}, {expires: "1M"})
+            Cookies.set("testing-cookies-2", {uuid: 12345},  {expires: "2d"})
 
             if(Cookies.get("testing-cookies-1")) {
                 console.log(Cookies.get("testing-cookies-1"));
+                //Cookies.remove("testing-cookies-1");
             }
             if(Cookies.get("testing-cookies-2")) {
                 console.log(Cookies.get("testing-cookies-2"));
+                //Cookies.remove("testing-cookies-2");
             }
 
-            
+
 
         </script>
     </body>
